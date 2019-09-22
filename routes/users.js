@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const { getUsers } = require('../controllers/users')
 
-router.get('/current-user', (_, res) => {
-  res.send(200, { status: 'ok' })
-})
+router.get('/users', getUsers)
 
 const userRoute = router
 
