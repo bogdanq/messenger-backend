@@ -1,9 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const { getUsers } = require('../controllers/users')
+const checkSession = require('../middleware/checkSession')
+const { 
+  getUsers,
+  signUp,
+  deleteUser,
+  getCurrentUser,
+  signIn,
+  updateUser,
+} = require('../controllers/users')
 
-router.get('/users', getUsers)
-
-const userRoute = router
-
-module.exports = userRoute
+module.exports = router
+  .get('/', getUsers)
+  .get('/current-user/:id', checkSession, getCurrentUser)
+  .post('/create-user', signUp)
+  .post('/sign-in', signIn)
+  .put('/update', checkSession, updateUser)
+  .delete('/delete-user/:id', checkSession, deleteUser)

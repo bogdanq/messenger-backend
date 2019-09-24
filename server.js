@@ -6,22 +6,14 @@ const io = require('socket.io')(server, { serveClient: true })
 const routes = require('./routes')
 const logger = require('morgan')
 const cors = require('cors')
-const passport = require('passport')
-const mongoose = require('mongoose')
-const MONGO_URI = 'mongodb://bogdan:1111111Q@ds119049.mlab.com:19049/messenger'
+const session = require('./middleware/session')
+require('./index')(io)
 
 app.use(cors())
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(passport.initialize())
-
-require('./index')(io)
-
-mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(mongodb => mongodb)
-  .catch(err => console.log('some error', err))
+app.use(session)
 
 for (let routeName in routes) {
   app.use(`/${routeName}`, routes[routeName])
