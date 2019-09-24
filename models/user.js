@@ -45,7 +45,7 @@ UserSchema.pre('save', function(next){
   next()
 })
 
-UserSchema.pre('update', function(next) {
+UserSchema.pre('findOneAndUpdate', function(next) {
   this.update({}, { password: bcrypt.hashSync(this._update.password, 12) } );
   next()
 })

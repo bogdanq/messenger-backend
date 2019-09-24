@@ -4,7 +4,7 @@ const MongoStore = require('connect-mongo')(expressSession)
 const URL = 'mongodb://bogdan:1111111Q@ds119049.mlab.com:19049/messenger'
 
 mongoose
-  .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then(mongodb => mongodb)
   .catch(err => console.log('some error', err))
 

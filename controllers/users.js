@@ -62,11 +62,9 @@ const updateUser = async (request, response) => {
   try {
     const userId = request.session.user._id
     const updateUserData = pick(request.body, UserModel.createFields);
-    await UserModel.update({ _id: userId }, updateUserData)
-    const user = await UserModel.findOne({ _id: userId })
+    const user = await UserModel.findOneAndUpdate({ _id: userId }, updateUserData, { new: true })
     response.status(200).send({ data: user })
   } catch (e) {
-    console.log(e)
     response.status(200).send({ error: true, message: 'Ошибка при обновлении пользователя' })
   }
 }
